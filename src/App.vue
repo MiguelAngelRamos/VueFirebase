@@ -4,9 +4,6 @@
   </template>
 
   <AuthView v-if="!user && user !== undefined" />
-  <!-- <pre>
-    {{user}}
-  </pre> -->
 </template>
 
 <script>

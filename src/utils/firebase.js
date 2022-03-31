@@ -1,4 +1,4 @@
-import { getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -19,3 +19,11 @@ const auth = getAuth(app);
 export {
   auth
 };
+
+
+// Funciones
+
+// VAMOS A CREAR EL USUARIO EN FIREBASE
+export const userCreated = ( email, password ) => {
+  createUserWithEmailAndPassword(auth, email, password);
+}
