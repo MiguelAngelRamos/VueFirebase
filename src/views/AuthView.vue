@@ -18,6 +18,14 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .auth {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    background: linear-gradient(0deg, rgb(119, 118, 118) 0%,rgb(197, 193, 193) 100%)
+  }
 </style>
