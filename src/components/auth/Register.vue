@@ -7,6 +7,7 @@
         <input 
           type="text"
           placeholder="Correo electronico"
+          autocomplete="off"
           v-model="formData.email"
           :class="{error: formError.email}"
         />
@@ -15,6 +16,7 @@
         <input
           type="password"
           placeholder="Contraseña"
+          autocomplete="off"
           v-model="formData.password"
           :class="{error: formError.password}"
         />
@@ -23,6 +25,7 @@
         <input 
           type="password"
           placeholder="Repetir Contraseña"
+          autocomplete="off"
           v-model="formData.repeatPassword"
           :class="{error: formError.repeatPassword}"
         />
@@ -35,6 +38,7 @@
         Registrar
       </button>
     </form>
+    <p @click="changeForm"> Iniciar la sesión </p>
   </div>
 </template>
 
@@ -44,6 +48,9 @@ import * as Yup from "yup";
 import { userCreated } from "../../utils/firebase";
 export default {
   name: "Register",
+  props: {
+    changeForm: Function
+  },
   setup() {
     const formData = {};
     const formError= ref({});
@@ -107,6 +114,15 @@ export default {
       input.error {
         border-color: #faa;
         background-color: #ffeded;
+      }
+    }
+
+    p {
+      text-align: center;
+      margin-top: 30px;
+      &:hover {
+        cursor: pointer;
+        opacity: 0.5;
       }
     }
   }
