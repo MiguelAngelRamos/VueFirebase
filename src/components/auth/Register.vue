@@ -29,7 +29,8 @@
       </div>
       <button
         type="submit"
-        class="ui button positive fluid loading"
+        class="ui button positive fluid"
+        :class="{loading}"
       >
         Registrar
       </button>
@@ -57,6 +58,7 @@ export default {
     // Metodos
     const onRegister = async () => {
       console.log(formData)
+      loading.value = true;
       formError.value = {};
       try {
         await schemaForm.validate(formData, { abortEarly: false});
@@ -74,11 +76,13 @@ export default {
           // console.log(formError.value);
         })
       }
+      loading.value = false;
     }
     return {
       onRegister,
       formData,
-      formError
+      formError,
+      loading
     }
   }
 }
