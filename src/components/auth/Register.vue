@@ -2,19 +2,21 @@
   <div class="register">
     <h2>Crear cuenta</h2>
     <!-- ui, form, field son clases de sematic -->
-    <form class="ui form">
+    <form class="ui form" @submit.prevent="onRegister">
 
       <div class="field">
         <input 
           type="text"
           placeholder="Correo electronico"
+          v-model="formData.email"
         />
       </div>
 
       <div class="field">
-        <input 
+        <input
           type="password"
           placeholder="Contraseña"
+          v-model="formData.password"
         />
       </div>
 
@@ -22,6 +24,7 @@
         <input 
           type="password"
           placeholder="Repetir Contraseña"
+          v-model="formData.repeatPassword"
         />
       </div>
 
@@ -36,8 +39,38 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import * as Yup from "yup";
 export default {
+  name: "Register",
+  setup() {
+    const formData = {};
+    const formError= ref({});
+    const loading = ref(false);
+  
+    // Tomando las propiedades del objeto formData
+    const schemaForm = Yup.object().shape({
+      email: Yup.string().email(true).required(true),
+      password: Yup.string().required(true),
+      repeatPassword: Yup.string().required(true).oneOf([Yup.ref("password")], true)
+    });
+    // Metodos
+    const onRegister = async () => {
+      console.log(formData)
+      formError.value = {};
+      try {
+        await schemaForm.validate(formData, { abortEarly: false});
+        console.log('TODO SALIO BIEN VALIDACIONES OK!!')
+      } catch(error) {
+        console.log(error)
+      }
+    }
 
+    return {
+      onRegister,
+      formData
+    }
+  }
 }
 </script>
 

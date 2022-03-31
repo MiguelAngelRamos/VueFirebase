@@ -1,11 +1,13 @@
 <template>
   <div class="auth">
     <Register />
+    <!-- <button ref="buttonRef">boton de referencia</button> -->
   </div>
 </template>
 
 <script>
 
+import { ref, watch } from "vue";
 import Login from "../components/auth/Login.vue";
 import Register from "../components/auth/Register.vue";
 
@@ -14,6 +16,15 @@ export default {
   components: {
     Login,
     Register
+  },
+  setup() {
+    // const buttonRef = ref(null);
+    // watch(buttonRef, (value) => {
+    //   console.log(value);
+    // })
+    return {
+      // buttonRef
+    }
   }
 }
 </script>
