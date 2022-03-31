@@ -1,30 +1,47 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <template v-if="user"> 
+     <router-view/>
+  </template>
+
+  <AuthView v-if="!user && user !== undefined" />
+  <pre>
+    {{user}}
+  </pre>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { computed, onMounted } from "vue";
+// Vuex
+import { useStore } from "vuex";
+// Firebase
+import { auth } from "./utils/firebase.js";
+// Componentes
+import AuthView from "./views/AuthView.vue";
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+  name: "App",
+  components: {
+    AuthView
+  },
+  setup() {
+    const store = useStore();
+    const user = computed(()=> store.state.user);
+    onMounted(() => {
+      auth.onAuthStateChanged((user) => {
+        // Nos devuelve null
+        console.log(user);
+        // user es que el viene de firebase
+        // store.commit("setUser", { name: "Miguel"})
+        store.commit("setUser", user);
+      })
+    })
+    return {
+      user,
     }
-  }
+  },
 }
+</script>
+
+<style lang="scss">
+
 </style>
