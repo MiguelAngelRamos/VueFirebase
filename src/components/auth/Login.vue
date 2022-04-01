@@ -8,6 +8,7 @@
           type="text"
           placeholder="Correo Electronico"
           v-model="formData.email"
+          :class="{ error: formError.email}"
         />
       </div>
 
@@ -16,10 +17,11 @@
           type="password"
           placeholder="Contraseña"
           v-model="formData.password"
+          :class="{error: formError.password}"
         />
       </div>
 
-      <button type="submit" class="ui button positive fluid">Entrar</button>
+      <button type="submit" class="ui button positive fluid" :class="{loading}">Entrar</button>
       <p @click="changeForm">Crear una cuenta</p>
     </form>
   </div>
@@ -35,29 +37,42 @@ export default {
     changeForm: Function,
   },
   setup() {
-    const formData = {};
+    const formData = {}; // sera el objeto que va contener la informacion de los input
     const formError = ref({}); // formError.value
     const loading = ref(false);
 
     // LAS VALIDACIONES
     const schemaForm = Yup.object().shape({
       email: Yup.string().email(true).required(true),
-      password: Yup.string().required(true).min(6, true).max(12, true),
+      password: Yup.string().required(true).min(6, true).max(20, true),
     });
 
     const onLogin = async () => {
       // console.log(formData)
       formError.value = {};
+      loading.value = true;
       try {
         await schemaForm.validate(formData, { abortEarly: false});
-        console.log("TODO OK DATOS CORRECTOS")
-      } catch (error) {
-        console.log(error)
+        console.log("TODO OK DATOS CORRECTOS");
+        // el Login con Firebase
+        try {
+          const {email, password } = formData;
+          await login(email, password);
+        } catch (error) {
+          console.log(error);
+        }
+      } catch (err) {
+        // inner un arreglo
+        err.inner.forEach( error => {
+          formError.value[error.path] = error.message;
+        });
       }
     };
     return {
       formData,
-      onLogin
+      onLogin,
+      formError,
+      loading
     };
   },
 };
