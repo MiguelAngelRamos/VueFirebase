@@ -9,7 +9,7 @@
 
 <script>
 
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import Login from "../components/auth/Login.vue";
 import Register from "../components/auth/Register.vue";
 

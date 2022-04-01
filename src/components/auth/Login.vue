@@ -67,6 +67,7 @@ export default {
           formError.value[error.path] = error.message;
         });
       }
+      loading.value = false;
     };
     return {
       formData,

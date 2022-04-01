@@ -8,7 +8,7 @@
 <script>
 // @ is an alias to /src
 
-import {  userSignOut } from "../utils/firebase";
+import { userSignOut } from "../utils/firebase";
 import Layout from "../layout/Layout.vue";
 export default {
   name: 'HomeView',

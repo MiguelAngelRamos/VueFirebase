@@ -26,7 +26,6 @@ export default {
     onMounted(() => {
       auth.onAuthStateChanged((user) => {
         // Nos devuelve null
-        console.log(user);
         // user es que el viene de firebase
         // store.commit("setUser", { name: "Miguel"})
         store.commit("setUser", user);
