@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -28,7 +28,12 @@ export const userCreated = ( email, password ) => {
   createUserWithEmailAndPassword(auth, email, password);
 }
 
+// INICIAR LA SESIÓN
+export const login = (email, password) => {
+  signInWithEmailAndPassword(auth, email, password);
+}
 // PARA CERRAR LA SESIÓN
 export const userSignOut = () => {
   signOut(auth);
 }
+
