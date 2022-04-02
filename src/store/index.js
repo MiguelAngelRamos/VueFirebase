@@ -14,6 +14,7 @@ export default createStore({
       auth.onAuthStateChanged( user => {
         console.log(user);
         commit("setUser", { ...user })
+        
       })
     }
   },
