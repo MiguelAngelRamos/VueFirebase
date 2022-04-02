@@ -17,7 +17,7 @@
       <div class="menu right">
 
         <router-link class="item" to="/profile">
-          Hola, {{ user.displayname || user.email }}
+          Hola, {{ user.displayName || user.email }}
         </router-link>
 
         <!-- Icono para cerrar la sesión -->

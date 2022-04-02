@@ -1,12 +1,10 @@
 <template>
   <form class="ui form change-name" @submit.prevent="onChangeName">
     <input type="text" placeholder="Nombre y Apellido" v-model="name" :class="{ error: formError}">
-    <button type="submit" class="ui button primary">Actualizar</button>
+    <button type="submit" class="ui button primary" :class="{loading: loading}">Actualizar</button>
   </form>
 </template>
-
 <script>
-
 import { useStore } from "vuex";
 import { ref } from "vue";
 import * as Yup from "yup";
@@ -19,7 +17,6 @@ export default {
     const name = ref("");
     const formError = ref(false);
     const loading = ref(false);
-
     // Las validaciones
     const schemaForm = Yup.object().shape({
       name: Yup.string().required(true).min(6, true),
@@ -27,9 +24,17 @@ export default {
 
     const onChangeName = async () => {
       formError.value = false;
+      loading.value = true;
       try {
         await schemaForm.validate({name: name.value}, {abortEarly: false});
-        console.log("TODO SALIO BIEN LISTOS PARA CAMBIAR EL NOMBRE")
+        console.log("TODO SALIO BIEN LISTOS PARA CAMBIAR EL NOMBRE");
+        try {
+          await updateUserProfile(name.value);
+          store.dispatch("realoadUser");
+        } catch (error) {
+          console.log(error);
+        }
+
       } catch (err) {
        err.inner.forEach(error => {
          // path = name  , message = true
@@ -37,12 +42,14 @@ export default {
          // name: true
        })
       }
+      loading.value = false;
     }
 
     return {
       name,
       onChangeName,
-      formError
+      formError,
+      loading
     }
   }
 }
