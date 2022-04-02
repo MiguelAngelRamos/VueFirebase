@@ -64,7 +64,7 @@ export default {
     });
     // Metodos
     const onRegister = async () => {
-      console.log(formData)
+      // console.log(formData)
       loading.value = true;
       formError.value = {};
       try {

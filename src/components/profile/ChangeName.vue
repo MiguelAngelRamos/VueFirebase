@@ -1,0 +1,62 @@
+<template>
+  <form class="ui form change-name" @submit.prevent="onChangeName">
+    <input type="text" placeholder="Nombre y Apellido" v-model="name" :class="{ error: formError}">
+    <button type="submit" class="ui button primary">Actualizar</button>
+  </form>
+</template>
+
+<script>
+
+import { useStore } from "vuex";
+import { ref } from "vue";
+import * as Yup from "yup";
+import { updateUserProfile } from "../../utils/firebase";
+
+export default {
+  name: "ChangeName",
+  setup() {
+    const store = useStore();
+    const name = ref("");
+    const formError = ref(false);
+    const loading = ref(false);
+
+    // Las validaciones
+    const schemaForm = Yup.object().shape({
+      name: Yup.string().required(true).min(6, true),
+    });
+
+    const onChangeName = async () => {
+      formError.value = false;
+      try {
+        await schemaForm.validate({name: name.value}, {abortEarly: false});
+        console.log("TODO SALIO BIEN LISTOS PARA CAMBIAR EL NOMBRE")
+      } catch (err) {
+       err.inner.forEach(error => {
+         // path = name  , message = true
+         formError.value = error.message
+         // name: true
+       })
+      }
+    }
+
+    return {
+      name,
+      onChangeName,
+      formError
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .ui.form.change-name {
+    text-align: center;
+    input.error {
+      border-color: #faa;
+      background-color: #ffeded;
+    }
+    .ui.button {
+      margin: 20px 0 0 0;
+    }
+  }
+</style>

@@ -16,7 +16,7 @@
 
       <div class="menu right">
 
-        <router-link class="item" to="/perfil">
+        <router-link class="item" to="/profile">
           Hola, {{ user.displayname || user.email }}
         </router-link>
 
@@ -46,7 +46,7 @@ export default {
     // Vuex
     const store = useStore();
     const user = computed( () => store.state.user);
-    console.log(user.value);
+    // console.log(user.value);
     return {
       user,
       logout
