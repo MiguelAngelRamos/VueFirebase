@@ -11,6 +11,7 @@
         <p class="title">
           Cambiar email <span>{{ user.email }}</span>
         </p>
+        <ChangeEmail />
       </div>
     </Layout>
   </div>
@@ -23,12 +24,15 @@ import { useStore } from "vuex";
 import { computed } from "vue";
 // Componentes del profile
 import ChangeName from "../components/profile/ChangeName.vue";
+// import ChangeEmail from "../components/profile/ChangeName.vue";
+import ChangeEmail from "@/components/profile/ChangeEmail.vue";
 
 export default {
   name: "Profile",
   components: {
     Layout,
-    ChangeName
+    ChangeName,
+    ChangeEmail
   },
   setup() {
 
