@@ -1,14 +1,14 @@
 <template>
   <Layout>
-    <h1>Esta es la Home</h1>
-    <button @click="logout">Cerrar Sesión</button>
+    <div class="files">
+      <h1>Sistema de registro de archivos</h1>
+    </div>
   </Layout>
 </template>
 
 <script>
 // @ is an alias to /src
 
-import { userSignOut } from "../utils/firebase";
 import Layout from "../layout/Layout.vue";
 export default {
   name: 'HomeView',
@@ -16,10 +16,7 @@ export default {
     Layout
   },
   setup() {
-    const logout = () => userSignOut();
-
     return {
-      logout
     }
   }
 }

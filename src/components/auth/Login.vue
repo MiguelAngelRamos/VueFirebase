@@ -29,7 +29,7 @@
 
 <script>
 import { ref } from "vue";
-import { login } from "../../utils/firebase";
+import { auth } from "../../utils/firebase";
 import * as Yup from "yup";
 export default {
   name: "Login",
@@ -37,6 +37,7 @@ export default {
     changeForm: Function,
   },
   setup() {
+  
     const formData = {}; // sera el objeto que va contener la informacion de los input
     const formError = ref({}); // formError.value
     const loading = ref(false);
@@ -57,10 +58,12 @@ export default {
         // el Login con Firebase
         try {
           const {email, password } = formData;
-          await login(email, password);
+          await auth.signInWithEmailAndPassword(email, password);
         } catch (error) {
           console.log(error);
         }
+
+
       } catch (err) {
         // inner un arreglo
         err.inner.forEach( error => {

@@ -33,22 +33,16 @@
 
 <script>
 
-import { userSignOut } from "../utils/firebase.js";
+import { auth } from "../utils/firebase.js";
 import { useStore } from "vuex";
 import { computed } from "vue";
-import { useRouter } from 'vue-router';
 
 export default {
   name: "Navbar",
   setup() {
     // methods
-    const router = useRouter();
-    const logout = () => {
-      console.log('Cerrrando Sesión')
-      router.push({path: '/login'})
-      userSignOut();
-    }
-
+    const logout = () => auth.signOut();
+  
     // Vuex
     const store = useStore();
     const user = computed( () => store.state.user);

@@ -9,7 +9,7 @@
 
       <div class="profile__section">
         <p class="title">
-          Cambiar email <span>miguel@correo.com</span>
+          Cambiar email <span>{{ user.email }}</span>
         </p>
       </div>
     </Layout>
@@ -17,15 +17,27 @@
 </template>
 
 <script>
-import Layout from "../layout/Layout.vue";
 
+import Layout from "../layout/Layout.vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
 // Componentes del profile
 import ChangeName from "../components/profile/ChangeName.vue";
+
 export default {
   name: "Profile",
   components: {
     Layout,
     ChangeName
+  },
+  setup() {
+
+    const store = useStore();
+    const user = computed(() => store.state.user);
+
+    return {
+      user
+    }
   }
 }
 </script>

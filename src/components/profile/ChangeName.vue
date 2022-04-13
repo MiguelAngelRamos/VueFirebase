@@ -8,7 +8,7 @@
 import { useStore } from "vuex";
 import { ref } from "vue";
 import * as Yup from "yup";
-import { updateUserProfile } from "../../utils/firebase";
+import { auth } from "../../utils/firebase";
 
 export default {
   name: "ChangeName",
@@ -19,7 +19,7 @@ export default {
     const loading = ref(false);
     // Las validaciones
     const schemaForm = Yup.object().shape({
-      name: Yup.string().required(true).min(6, true),
+      name: Yup.string().required(true).min(5, true),
     });
 
     const onChangeName = async () => {
@@ -29,7 +29,10 @@ export default {
         await schemaForm.validate({name: name.value}, {abortEarly: false});
         console.log("TODO SALIO BIEN LISTOS PARA CAMBIAR EL NOMBRE");
         try {
-          await updateUserProfile(name.value);
+          await auth.currentUser.updateProfile({
+            // donde ingresamos nombre al perfil de usuario
+            displayName: name.value
+          })
           store.dispatch("realoadUser");
         } catch (error) {
           console.log(error);

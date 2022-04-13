@@ -3,6 +3,7 @@
     <h2>Crear cuenta</h2>
     <!-- ui, form, field son clases de sematic -->
     <form class="ui form" @submit.prevent="onRegister">
+
       <div class="field">
         <input 
           type="text"
@@ -12,6 +13,7 @@
           :class="{error: formError.email}"
         />
       </div>
+
       <div class="field">
         <input
           type="password"
@@ -45,14 +47,18 @@
 <script>
 import { ref } from "vue";
 import * as Yup from "yup";
-import { userCreated } from "../../utils/firebase";
+import { auth } from "../../utils/firebase";
 export default {
   name: "Register",
   props: {
     changeForm: Function
   },
   setup() {
-    const formData = {};
+    const formData = {
+      email: '',
+      password: '',
+      repeatPassword: '',
+    };
     const formError= ref({});
     const loading = ref(false);
   
@@ -70,9 +76,10 @@ export default {
       try {
         await schemaForm.validate(formData, { abortEarly: false});
         console.log('TODO SALIO BIEN VALIDACIONES OK!!')
+        // Vamos al Usuario con Firebase
         try {
           const {email, password} = formData;
-          await userCreated(email, password);
+          await auth.createUserWithEmailAndPassword(email, password);
         } catch (error) {
           console.log(error)
         }
