@@ -1,7 +1,9 @@
 <template>
   <div class="profile">
     <Layout>
+
       <h2>Bienvenido(a) al perfil de usuario</h2>
+
       <div class="profile__section">
         <p class="title"> Cambiar el nombre <span>Username</span> </p>
         <ChangeName />
@@ -13,6 +15,14 @@
         </p>
         <ChangeEmail />
       </div>
+
+      <div class="profile__section">
+        <p class="title">
+          Cambiar contraseña
+        </p>
+        <ChangePassword />
+      </div>
+
     </Layout>
   </div>
 </template>
@@ -26,13 +36,15 @@ import { computed } from "vue";
 import ChangeName from "../components/profile/ChangeName.vue";
 // import ChangeEmail from "../components/profile/ChangeName.vue";
 import ChangeEmail from "@/components/profile/ChangeEmail.vue";
+import ChangePassword from "@/components/profile/ChangePassword.vue";
 
 export default {
   name: "Profile",
   components: {
     Layout,
     ChangeName,
-    ChangeEmail
+    ChangeEmail,
+    ChangePassword
   },
   setup() {
 

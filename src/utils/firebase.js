@@ -4,8 +4,6 @@ import "firebase/storage";
 import "firebase/firestore";
 
 
-
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
