@@ -20,6 +20,8 @@
         </div>
       </div>
 
+      <button class="ui button positive fluid" type="submit">Subir archivo</button>
+
     </form>
   </div>
 </template>
@@ -57,12 +59,18 @@ export default {
     };
 
     const handleSubmit = () => {
-      console.log('Subiendo archivo...');
+      // console.log('Subiendo archivo...');
+      if(file.value && date.value) {
+        console.log('enviando archivo a la base de datos...');
+      } else {
+        console.log('Suba un archivo pdf y seleccione la fecha');
+      }
     };
 
     return {
       uploadFile,
       changeDate,
+      handleSubmit
     }
   }
 }
