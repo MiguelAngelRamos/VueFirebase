@@ -28,6 +28,9 @@
 
 <script>
 import { ref } from "vue";
+import { v4 as uuidv4 } from "uuid";
+import { auth, storage, db } from "@/utils/firebase";
+
 export default {
   name: 'FileUpload',
   setup() {
@@ -58,10 +61,29 @@ export default {
       date.value = event.target.value;
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
       // console.log('Subiendo archivo...');
       if(file.value && date.value) {
-        console.log('enviando archivo a la base de datos...');
+        loading.value = true;
+        try {
+          const nameFile = uuidv4(); // nos devuelve un identificador unico
+          /**
+           * ref = es la carpeta donde vamos a guardar el archivo
+           * child = el nombre del archivo que va estar dentro de la carpeta.
+           * put = aqui vamos a indentificar el archivo que vamos subir
+           */
+          // Se sube el archivo
+          await storage.ref(auth.currentUser.uid).child(`${nameFile}.pdf`).put(file.value);
+          // Obtener la url del fichero
+          const fileUrl = await storage.ref(`${auth.currentUser.uid}/${nameFile}.pdf`).getDownloadURL();
+          console.log(fileUrl);
+          // Subir el archivo al storage
+          
+
+        } catch (error) {
+          
+        }
+        // console.log('enviando archivo a la base de datos...');
       } else {
         console.log('Suba un archivo pdf y seleccione la fecha');
       }
