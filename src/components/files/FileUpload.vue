@@ -11,6 +11,7 @@
       <div class="field">
         <label class="ui button" for="file">
           Subir archivo
+          <span v-if="file">{{ file.name }}</span>
           <i class="fa-solid fa-file-arrow-up"></i>
         </label>
         <input id="file" type="file" hidden @change="uploadFile"/>
@@ -37,7 +38,10 @@ import { auth, storage, db } from "@/utils/firebase";
 
 export default {
   name: 'FileUpload',
-  setup() {
+  props: {
+    getFiles: Function,
+  },
+  setup(props) {
     let showForm = ref(false);
     const loading = ref(false);
     const error = ref(null);
@@ -94,7 +98,8 @@ export default {
             date: new Date(date.value), // va estar en formato de javascript
             dateString: date.value
           })
-
+          // Aqui donde necesito ver los nuevos archivos de la base de datos
+          props.getFiles();
         } catch (error) {
           console.log(error);
         }
@@ -103,6 +108,11 @@ export default {
         // resetear el formulario
         file.value = null;
         date.value = null;
+
+        // Cerramos el formulario
+        showForm.value = false;
+        error.value = null;
+
       } else {
         console.log('Suba un archivo pdf y seleccione la fecha');
       }
@@ -114,7 +124,9 @@ export default {
       handleSubmit,
       error,
       showCloseOpenForm,
-      showForm
+      showForm,
+      file,
+      loading,
     }
   }
 }

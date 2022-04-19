@@ -4,9 +4,9 @@
       <h1>Sistema de registro de archivos</h1>
 
       <!-- Necesitamos componente para cargar un archivos -->
-      <FileUpload />
+      <FileUpload :getFiles="getFiles"/>
       <!-- Mostrar los archivos -->
-      <FilesList :filesList="showFiles"/>
+      <FilesList :filesList="showFiles" :getFiles="getFiles"/>
     
     </div>
   </Layout>
@@ -53,7 +53,8 @@ export default {
       showFiles.value = result; // arreglo
     }
     return {
-      showFiles
+      showFiles,
+      getFiles
     }
   }
 }
